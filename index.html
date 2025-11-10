@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizador Soinsolar - Documentación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '☀️';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.1;
+            right: -50px;
+            top: -50px;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            display: inline-block;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #ecf0f1 0%, #e8ebed 100%);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            font-size: 1.5em;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-left-color: #2c3e50;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .feature-card h4 {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9em;
+            box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .tech-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.25);
+        }
+
+        .workflow {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            border-left: 3px solid #3498db;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border-top: 3px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .benefit-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            filter: grayscale(20%);
+        }
+
+        .benefit-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            background: white;
+            color: #2c3e50;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.5em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Cotizador Soinsolar</h1>
+            <p class="subtitle">Aplicación Móvil para Cotización de Sistemas Solares</p>
+        </div>
+
+        <div class="content">
+            <!-- Resumen Ejecutivo -->
+            <div class="section">
+                <h2 class="section-title">📋 Resumen Ejecutivo</h2>
+                <div class="card">
+                    <h3><span class="card-icon">🎯</span>Objetivo del Proyecto</h3>
+                    <p style="color: #555; line-height: 1.8; font-size: 1.1em;">
+                        Desarrollar una aplicación móvil multiplataforma (Android/iOS) que permita a los asesores de ventas 
+                        generar cotizaciones profesionales de sistemas de energía solar de forma rápida y precisa, 
+                        con capacidad de edición de imágenes y exportación a PDF desde cualquier lugar.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Funcionalidades Principales -->
+            <div class="section">
+                <h2 class="section-title">⚡ Funcionalidades Principales</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🧮 Cálculo Automático</h4>
+                        <p>Cálculo instantáneo del costo energético actual del cliente y el ahorro proyectado con el sistema solar, considerando todos los cargos aplicables.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 Generación de PDF</h4>
+                        <p>Creación automática de cotizaciones profesionales en formato PDF con imagen de fondo personalizable y datos calculados.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>✏️ Editor de Imágenes</h4>
+                        <p>Herramientas integradas para anotar imágenes: lápiz, rectángulos, círculos y flechas con selección de colores y grosores.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📤 Compartir Fácilmente</h4>
+                        <p>Exportación directa del PDF generado a través de WhatsApp, email o cualquier aplicación de mensajería instalada.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📱 Diseño Adaptativo</h4>
+                        <p>Interfaz optimizada tanto para orientación vertical como horizontal, adaptándose a diferentes tamaños de pantalla.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎨 Interfaz Intuitiva</h4>
+                        <p>Diseño moderno con Material Design 3, iconos claros y flujo de trabajo simplificado para maximizar la productividad.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flujo de Trabajo -->
+            <div class="section">
+                <h2 class="section-title">🔄 Flujo de Trabajo</h2>
+                <div class="workflow">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Ingreso de Datos</strong><br>
+                            El asesor ingresa: consumo del cliente (kWh), generación estimada de la planta, 
+                            tarifa energética y porcentajes de contribución y alumbrado público.
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Cálculo Automático</strong><br>
+                            La app calcula instantáneamente el costo actual de energía del cliente y 
+                            el ahorro proyectado con el sistema solar.
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Edición de Imagen (Opcional)</strong><br>
+                            El usuario puede adjuntar y editar una imagen (foto del techo, diagrama, etc.) 
+                            usando las herramientas de dibujo integradas.
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Generación de PDF</strong><br>
+                            Al presionar "Generar PDF", la app crea un documento profesional con 
+                            dos páginas: cotización con datos + imagen editada.
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <strong>Compartir</strong><br>
+                            El PDF se puede compartir inmediatamente por WhatsApp, email o 
+                            cualquier otra aplicación de mensajería.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stack Tecnológico -->
+            <div class="section">
+                <h2 class="section-title">🛠️ Stack Tecnológico</h2>
+                <div class="card">
+                    <h3><span class="card-icon">💻</span>Tecnologías Utilizadas</h3>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Flutter (Dart)</span>
+                        <span class="tech-badge">Material Design 3</span>
+                        <span class="tech-badge">PDF Generation</span>
+                        <span class="tech-badge">Custom Painting</span>
+                        <span class="tech-badge">File Picker</span>
+                        <span class="tech-badge">Image Processing</span>
+                        <span class="tech-badge">Responsive Design</span>
+                    </div>
+                    <p style="color: #555; line-height: 1.8; margin-top: 20px;">
+                        <strong>Flutter</strong> permite desarrollar una única base de código que funciona 
+                        tanto en Android como iOS, reduciendo costos y tiempo de desarrollo significativamente.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Beneficios -->
+            <div class="section">
+                <h2 class="section-title">✨ Beneficios del Proyecto</h2>
+                <div class="benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">⚡</div>
+                        <h4>Rapidez</h4>
+                        <p>Cotizaciones en menos de 2 minutos</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🎯</div>
+                        <h4>Precisión</h4>
+                        <p>Cálculos automáticos sin errores manuales</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💼</div>
+                        <h4>Profesionalismo</h4>
+                        <p>PDFs de alta calidad con branding</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📱</div>
+                        <h4>Movilidad</h4>
+                        <p>Trabaja desde cualquier lugar</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💰</div>
+                        <h4>Ahorro</h4>
+                        <p>Una app para Android e iOS</p>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🚀</div>
+                        <h4>Productividad</h4>
+                        <p>Más clientes atendidos por día</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Características Técnicas -->
+            <div class="section">
+                <h2 class="section-title">🔧 Características Técnicas Destacadas</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📐 Exportación de Alta Calidad</h4>
+                        <p>Las imágenes editadas se exportan con escala 2x para mantener la calidad visual en el PDF final.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎨 Editor Avanzado</h4>
+                        <p>Sistema de capas con múltiples herramientas de dibujo, selector de colores completo y control de grosor de línea.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📏 Escalado Inteligente</h4>
+                        <p>Los dibujos se ajustan automáticamente al tamaño real de la imagen, independientemente del tamaño de pantalla.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>💾 Gestión de Estado</h4>
+                        <p>La imagen editada se mantiene en memoria hasta generar el PDF, permitiendo múltiples iteraciones.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔄 Deshacer/Rehacer</h4>
+                        <p>Funcionalidad de deshacer última acción y borrado completo con confirmación de seguridad.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🖼️ Vista Previa</h4>
+                        <p>Visualización de la imagen editada antes de incluirla en el PDF, con zoom interactivo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estado Actual -->
+            <div class="section">
+                <h2 class="section-title">📍 Estado Actual del Desarrollo</h2>
+                <div class="card" style="background: linear-gradient(135deg, #ecf0f1 0%, #e8ebed 100%); border-left: 4px solid #27ae60;">
+                    <h3><span class="card-icon">✅</span>Componentes Completados</h3>
+                    <ul style="color: #555; line-height: 2; font-size: 1.05em; margin-left: 20px; margin-top: 15px;">
+                        <li>✔️ Interfaz de usuario completa y optimizada</li>
+                        <li>✔️ Motor de cálculo de cotizaciones</li>
+                        <li>✔️ Sistema de generación de PDF con dos páginas</li>
+                        <li>✔️ Editor de imágenes funcional con 4 herramientas</li>
+                        <li>✔️ Sistema de exportación y compartición</li>
+                        <li>✔️ Diseño responsive para múltiples orientaciones</li>
+                        <li>✔️ Gestión de archivos e imágenes</li>
+                        <li>✔️ Validación de formularios</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Próximos Pasos -->
+            <div class="section">
+                <h2 class="section-title">🎯 Próximos Pasos Sugeridos</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🧪 Testing</h4>
+                        <p>Realizar pruebas exhaustivas en diferentes dispositivos Android e iOS para validar funcionamiento.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎨 Branding</h4>
+                        <p>Personalizar colores, logos y diseño del PDF según la identidad corporativa de Soinsolar.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>💾 Base de Datos</h4>
+                        <p>Implementar almacenamiento local de cotizaciones previas para consulta histórica.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 Analytics</h4>
+                        <p>Agregar seguimiento de métricas: cotizaciones generadas, tiempos promedio, tasas de conversión.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔐 Autenticación</h4>
+                        <p>Sistema de login para múltiples usuarios y sincronización en la nube.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📱 Publicación</h4>
+                        <p>Compilar APK para Android y preparar versión iOS para App Store.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-section">
+                <h2>🚀 Aplicación Lista para Pruebas</h2>
+                <p style="font-size: 1.2em; margin-top: 10px;">
+                    El desarrollo actual está funcional y listo para ser probado por el equipo de ventas.
+                    <br>La aplicación puede compilarse para generar el APK de instalación.
+                </p>
+                <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                    <p style="font-size: 1.1em; margin-bottom: 10px;">
+                        <strong>📦 Archivos del Proyecto:</strong>
+                    </p>
+                    <p>
+                        ✓ Código fuente Flutter completo<br>
+                        ✓ Assets configurados (imagen de fondo)<br>
+                        ✓ Dependencias documentadas en pubspec.yaml<br>
+                        ✓ Listo para compilación Android/iOS
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
